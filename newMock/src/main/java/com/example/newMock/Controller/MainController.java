@@ -42,7 +42,9 @@ public class MainController {
             } else {
                 maxlimit = new BigDecimal(10000);
             }
-
+            
+            Random random = new Random();
+            int randomNumber = random.nextInt(maxlimit.intValue());
 
             ResponseDTO ResponseDTO = new ResponseDTO();
 
@@ -50,7 +52,7 @@ public class MainController {
             ResponseDTO.setClientId(clientId);
             ResponseDTO.setAccount(RequestDTO.getAccount());
             ResponseDTO.setCurrency("RU");
-            ResponseDTO.setBalance(new BigDecimal(777));
+            ResponseDTO.setBalance(new BigDecimal(randomNumber));
             ResponseDTO.setMaxLimit(maxlimit);
 
             log.error("********** RequestDTO **********" + mapper.writerWithDefaultPrettyPrinter().writeValueAsString(RequestDTO));
