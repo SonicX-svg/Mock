@@ -1,0 +1,33 @@
+1.запушить образ в репозиторий dockerhub:
+-docker push sonikxsvg/ci_cd:mock
+-docker pull sonikxsvg/ci_cd:mock
+
+2.Удалить все неиспользуемые контейнеры, сети, образы (как висящие, так и неиспользуемые), и, необязательно, тома:
+добавила:
+(sudo docker system prune --force) - job:'prune'
+
+stage('docker_prune'){
+    steps{
+        echo 'start stage prune'
+        build(job:'prune') 
+    }}            
+    
+
+3.создать контейнер с сохранным jenkinsом:
+docker run -p 8080:8080 -p 50000:50000 -v jenkins_home:/var/jenkins_home jenkins/jenkins:lts-jdk11
+
+pipeline{
+    agent any
+    stages{
+        stage('first hello1'){
+            steps{
+                build(job: 'hello1', propagate: false)
+            }}
+        stage('first hello2'){
+            steps{
+                build(job: 'hello2', propagate: false)
+                }
+            }
+        
+    }
+}
